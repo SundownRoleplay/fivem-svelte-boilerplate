@@ -1,7 +1,7 @@
 import { writable, type Writable } from "svelte/store";
 
 const initialState = {
-  currentRoute: '/',
+  currentRoute: "/",
 };
 
 export const store = writable(initialState);
@@ -14,6 +14,5 @@ export const actions = {
     }));
   },
 };
-
 
 export const visibility: Writable<boolean> = writable(false);

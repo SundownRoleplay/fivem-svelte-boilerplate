@@ -22,13 +22,7 @@ export async function fetchNui<T = any>(
      ? (window as any).GetParentResourceName()
      : "nui-frame-app";
 
-   const url = `https://${resourceName}/${eventName}`;
-   console.log(url)
-   const response = await fetch(url, options);
-
-   if (!response.ok) {
-     throw new Error(`Request failed with status ${response.status}`);
-   }
+   const response = await fetch(`https://${resourceName}/${eventName}`, options);
 
    return await response.json();
  } catch (error) {
