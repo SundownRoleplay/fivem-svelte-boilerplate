@@ -2,7 +2,7 @@
 
 <script lang="ts">
  import { onMount } from 'svelte';
-  import { actions } from '../lib/store';
+  import { actions } from '../lib/stores';
 
  onMount(() => {
    // Defina o código a ser executado quando este componente é montado.
