@@ -23,6 +23,7 @@ export async function fetchNui<T = any>(
      : "nui-frame-app";
 
    const url = `https://${resourceName}/${eventName}`;
+   console.log(url)
    const response = await fetch(url, options);
 
    if (!response.ok) {

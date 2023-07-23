@@ -3,6 +3,7 @@
   import { useNuiEvent } from '../useNuiEvent';
   import { visibility } from '../stores';
   import { fetchNui } from '../fetchNui';
+  import { actions } from '../stores';
 
   let isVisible: boolean;
 
@@ -11,6 +12,7 @@
   });
 
   useNuiEvent<boolean>('setVisible', (visible) => {
+    actions.setRoute('/')
     visibility.set(visible);
   });
 
@@ -19,6 +21,7 @@
       if (isVisible && ['Escape'].includes(e.code)) {
         fetchNui('hideUI');
         visibility.set(false);
+        actions.setRoute('/')
       }
     };
 
