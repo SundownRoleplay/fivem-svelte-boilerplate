@@ -5,29 +5,38 @@
  * @returns returnData - A promise for the data sent back by the NuiCallbacks CB argument
  */
 
-export async function fetchNui<T = any>(
- eventName: string,
- data: unknown = {}
+export function fetchNui<T = any>(
+  eventName: string,
+  data: unknown = {}
 ): Promise<T> {
- try {
-   const options: RequestInit = {
-     method: "POST",
-     headers: {
-       "Content-Type": "application/json; charset=UTF-8",
-     },
-     body: JSON.stringify(data),
-   };
+  return new Promise<T>(async (resolve, reject) => {
+    try {
+      const options: RequestInit = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+        body: JSON.stringify(data),
+      };
 
-   const resourceName = (window as any).GetParentResourceName
-     ? (window as any).GetParentResourceName()
-     : "nui-frame-app";
+      const resourceName =
+        typeof window !== "undefined" && (window as any).GetParentResourceName
+          ? (window as any).GetParentResourceName()
+          : "nui-frame-app";
 
-   const response = await fetch(`https://${resourceName}/${eventName}`, options);
+      const url = `https://${resourceName}/${eventName}`;
+      const response = await fetch(url, options);
 
-   return await response.json();
- } catch (error) {
-   // Handle any errors that occur during the fetch
-   console.error("Fetch error:", error);
-   throw error; // Propagate the error to the caller
- }
+      if (!response.ok) {
+        throw new Error(`Network response was not ok. Status: ${response.status}`);
+      }
+
+      const responseData = await response.json() as T;
+      resolve(responseData);
+    } catch (error) {
+      // Handle any errors that occur during the fetch
+      console.error("Fetch error:", error);
+      reject(error); // Reject the Promise with the error to the caller
+    }
+  });
 }
