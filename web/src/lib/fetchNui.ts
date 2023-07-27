@@ -27,11 +27,7 @@ export function fetchNui<T = any>(
       const url = `https://${resourceName}/${eventName}`;
       const response = await fetch(url, options);
 
-      if (!response.ok) {
-        throw new Error(`Network response was not ok. Status: ${response.status}`);
-      }
-
-      const responseData = await response.json() as T;
+      const responseData = (await response.json()) as T;
       resolve(responseData);
     } catch (error) {
       // Handle any errors that occur during the fetch

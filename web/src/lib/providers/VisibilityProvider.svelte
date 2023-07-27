@@ -1,7 +1,6 @@
 <script lang="ts">
   import { useNuiEvent } from '../useNuiEvent';
   import { visibility } from '../stores';
-  import { actions } from '../stores';
 
   let isVisible: boolean;
 
@@ -10,7 +9,6 @@
   });
 
   useNuiEvent<boolean>('setVisible', (visible) => {
-    actions.setRoute('/')
     visibility.set(visible);
   });
 </script>

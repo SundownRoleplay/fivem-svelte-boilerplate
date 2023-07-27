@@ -10,21 +10,21 @@
   }
 
   const routes: Route[] = [
-    { name: '/', component: Home },
-    { name: '/about', component: About }
-  ]
-  
+    { name: "/", component: Home },
+    { name: "/about", component: About },
+  ];
+
   let currentComponent: ComponentType;
-  
+
   onMount(() => {
     const unsubscribe = store.subscribe((state) => {
       let route = routes.find((element) => element.name === state.currentRoute);
 
       currentComponent = route.component;
     });
-    
+
     return unsubscribe;
-  })
+  });
 </script>
 
 <div>
