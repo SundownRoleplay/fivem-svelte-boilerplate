@@ -1,29 +1,32 @@
-/**
- * A function that manages event listeners for receiving data from the client scripts.
- * @param action The specific `action` that should be listened for.
- * @param handler The callback function that will handle data relayed by this function.
- *
- * @example
- * useNuiEvent<{ visibility: true; wasVisible: 'something' }>('setVisible', (data) => {
- *   // Your logic here
- * })
- **/
+import { onDestroy } from "svelte";
 
 interface NuiMessage<T = unknown> {
   action: string;
   data: T;
 }
 
-type NuiEventHandler<T = unknown> = (data: T) => void;
+/**
+ * A function that manage events listeners for receiving data from the client scripts
+ * @param action The specific `action` that should be listened for.
+ * @param handler The callback function that will handle data relayed by this function
+ *
+ * @example
+ * useNuiEvent<{visibility: true, wasVisible: 'something'}>('setVisible', (data) => {
+ *   // whatever logic you want
+ * })
+ *
+ **/
 
-const eventListeners = new Map<string, NuiEventHandler>();
+type NuiEventHandler<T = any> = (data: T) => void;
+
+const eventListeners = new Map<string, NuiEventHandler[]>();
 
 const eventListener = (event: MessageEvent<NuiMessage>) => {
   const { action, data } = event.data;
-  const handler = eventListeners.get(action);
+  const handlers = eventListeners.get(action);
 
-  if (handler) {
-    handler(data);
+  if (handlers) {
+    handlers.forEach((handler) => handler(data));
   }
 };
 
@@ -33,5 +36,16 @@ export function useNuiEvent<T = unknown>(
   action: string,
   handler: NuiEventHandler<T>
 ) {
-  eventListeners.set(action, handler);
+  const handlers = eventListeners.get(action) || [];
+  handlers.push(handler);
+  eventListeners.set(action, handlers);
+
+  onDestroy(() => {
+    const handlers = eventListeners.get(action) || [];
+
+    eventListeners.set(
+      action,
+      handlers.filter((h) => h !== handler)
+    );
+  });
 }
