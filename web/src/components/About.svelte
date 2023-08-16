@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { actions } from "../lib/stores";
+  import { currentRoute } from "../lib/stores";
   import { fetchNui } from "../lib/fetchNui";
   let health: string;
 
@@ -18,4 +18,4 @@
 <h1>HEALTH</h1>
 <p style="color: red;">{health}</p>
 <br />
-<button on:click={() => actions.setRoute("/")}>BACK HOME</button>
+<button on:click={() => currentRoute.set("/")}>BACK HOME</button>

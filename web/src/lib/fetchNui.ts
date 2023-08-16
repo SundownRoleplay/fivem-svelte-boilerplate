@@ -30,9 +30,8 @@ export function fetchNui<T = any>(
       const responseData = (await response.json()) as T;
       resolve(responseData);
     } catch (error) {
-      // Handle any errors that occur during the fetch
       console.error("Fetch error:", error);
-      reject(error); // Reject the Promise with the error to the caller
+      reject(error);
     }
   });
 }

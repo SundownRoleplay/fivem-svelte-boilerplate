@@ -1,18 +1,12 @@
 import { writable, type Writable } from "svelte/store";
+import type { VisibilityStore } from "../interfaces";
 
-const initialState = {
-  currentRoute: "/",
+export const currentRoute: Writable<string> = writable("/");
+export const visibilityProvider: Writable<VisibilityStore> = writable({});
+
+export const setComponentVisibility = (key: string, value: boolean) => {
+  visibilityProvider.update((oldVisibilityProvider) => ({
+    ...oldVisibilityProvider,
+    [key]: value,
+  }));
 };
-
-export const store = writable(initialState);
-
-export const actions = {
-  setRoute: (newRoute: string) => {
-    store.update((state) => ({
-      ...state,
-      currentRoute: newRoute,
-    }));
-  },
-};
-
-export const visibility: Writable<boolean> = writable(false);

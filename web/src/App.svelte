@@ -3,7 +3,7 @@
   import VisibilityProvider from "./lib/providers/VisibilityProvider.svelte";
 </script>
 
-<VisibilityProvider>
+<VisibilityProvider component="">
   <main>
     <Router />
   </main>

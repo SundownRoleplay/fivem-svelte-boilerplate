@@ -1,15 +1,22 @@
 <script lang="ts">
-  import { useNuiEvent } from '../useNuiEvent';
-  import { visibility } from '../stores';
+  import { useNuiEvent } from "../useNuiEvent";
+  import { visibilityProvider, setComponentVisibility } from "../stores";
+  import type { Visibility } from "../../interfaces";
+
+  export let component: string;
 
   let isVisible: boolean;
 
-  visibility.subscribe((visible) => {
-    isVisible = visible;
+  visibilityProvider.subscribe((data) => {
+    if (data[component] !== undefined) {
+      isVisible = data[component];
+    }
   });
 
-  useNuiEvent<boolean>('setVisible', (visible) => {
-    visibility.set(visible);
+  useNuiEvent<Visibility>("setComponentVisible", (data) => {
+    if (data.component === component) {
+      setComponentVisibility(data.component, data.isVisible);
+    }
   });
 </script>
 
