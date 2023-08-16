@@ -1,5 +1,5 @@
 fx_version "adamant"
-game "gta5"
+game "common"
 
 ui_page "web/dist/index.html"
 

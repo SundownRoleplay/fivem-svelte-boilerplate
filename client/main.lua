@@ -18,7 +18,7 @@ end
 
 RegisterNUICallback("getHealth", function(data, cb)
   cb({
-    health = GetEntityHealth(PlayerPedId())
+    health = 150
   })
 end)
 
