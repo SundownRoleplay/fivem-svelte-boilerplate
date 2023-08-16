@@ -1,13 +1,13 @@
-fx_version 'adamant'
-game 'gta5'
+fx_version "adamant"
+game "gta5"
 
-ui_page 'web/build/index.html'
+ui_page "web/dist/index.html"
 
 client_scripts {
-  'client/main.lua'
+  "client/*"
 }
 
 files {
-  'web/build/*',
-  'web/build/**/*'
+  "web/dist/*",
+  "web/dist/**/*"
 }
